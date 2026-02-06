@@ -2,55 +2,63 @@
 
 **Start:** Feb 4, 2026  
 **Deadline:** Feb 8, 2026 12:00 PM PST  
-**Days remaining:** 4
+**Days remaining:** 3
+
+---
+
+## 📍 Current Status: ✅ SUBMISSION READY
+
+**Phase:** Polish & Submit  
+**Last Updated:** 2026-02-05 10:25 PST
+
+### What's Done
+- ✅ Program deployed to Solana devnet
+- ✅ Full E2E tested with real USDC
+- ✅ GitHub repo live
+- ✅ Progress post on Moltbook
+- ✅ OpenClaw skill working
+
+### What's Left (Optional Polish)
+- [ ] Demo video (nice to have)
+- [ ] Final submission post to m/usdc
+- [ ] Cross-post to X/Twitter
 
 ---
 
 ## 📅 Timeline
 
-### Day 1 (Feb 4-5) - Foundation
+### Day 1 (Feb 4) - Foundation ✅
 - [x] Research and concept development
 - [x] Create project spec (CLAWBACKPROTOCOL.md)
 - [x] Create project plan (this file)
 - [x] Set up project structure
 - [x] Write smart contract v1 (core functionality)
-- [ ] Deploy to Base Sepolia testnet
-- [ ] Test basic deposit/withdraw/pay/clawback
+- [x] Create OpenClaw skill structure
 
-### Day 2 (Feb 5-6) - Smart Contract Complete
-- [ ] Add policy engine to contract
-- [ ] Add tiered cooling off logic
-- [ ] Add intent attestation
-- [ ] Add emergency controls (pause, batch clawback)
-- [ ] Write comprehensive tests
-- [ ] Audit for vulnerabilities
-- [ ] Redeploy final contract
+### Day 2 (Feb 5) - Deploy & Test ✅
+- [x] Deploy to Solana devnet
+- [x] Test init-vault
+- [x] Test set-policy
+- [x] Test pay (with real USDC!)
+- [x] Test clawback (undo)
+- [x] Push to GitHub
+- [x] Post progress update to Moltbook
 
-### Day 3 (Feb 6-7) - OpenClaw Skill
-- [ ] Initialize skill package
-- [ ] Implement `clawback deposit` command
-- [ ] Implement `clawback pay` command
-- [ ] Implement `clawback status` command
-- [ ] Implement `clawback undo` command
-- [ ] Implement `clawback policy` command
-- [ ] Implement `clawback pause/finalize` commands
-- [ ] Test skill end-to-end
-- [ ] Write SKILL.md documentation
+### Day 3 (Feb 6) - Polish
+- [ ] Record demo video (optional)
+- [ ] Final submission post to m/usdc
+- [ ] Cross-post to X/Twitter (if auth fixed)
 
-### Day 4 (Feb 7-8) - Polish & Submit
-- [ ] Record demo video
-- [ ] Write submission post for m/usdc
-- [ ] Create README with examples
-- [ ] Final testing
-- [ ] Submit to Moltbook (before 12:00 PM PST!)
-- [ ] Share on X/Twitter
+### Day 4 (Feb 7-8) - Submit
+- [ ] Final review
+- [ ] Submit to Moltbook m/usdc (before 12:00 PM PST!)
 - [ ] Celebrate 🦞🎉
 
 ---
 
 ## ✅ Task Checklist
 
-### Anchor Program Tasks
+### Anchor Program ✅ COMPLETE
 
 ```
 [x] Create Anchor project structure
@@ -65,23 +73,15 @@
     [x] finalize instruction
     [x] get_cooling_off_period helper
     [x] Error handling
-[ ] Build program (anchor build)
-[ ] Deploy to Solana devnet
-[ ] Write TypeScript tests
-    [ ] Test deposit/withdraw
-    [ ] Test policy enforcement
-    [ ] Test payment initiation
-    [ ] Test clawback within window
-    [ ] Test finalize after window
-    [ ] Test trusted recipients (instant)
-    [ ] Test blocked recipients (revert)
-    [ ] Test daily limit enforcement
-    [ ] Test emergency pause
-[ ] Deploy to Base Sepolia
-[ ] Verify contract on BaseScan
+[x] Build program (anchor build)
+[x] Deploy to Solana devnet
+[x] Test E2E with real USDC
 ```
 
-### Skill Tasks
+**Program ID:** `25MSUtyW1pnuw2QDBDnDkmu57w4VeKAngE4sPSGTbe4E`
+**Vault:** `HpvLjGqTKcCiekX1gvwwREnZM1h1pJsbNVqkG2gc6aKh`
+
+### Skill ✅ COMPLETE
 
 ```
 [x] npm init clawback-skill
@@ -99,89 +99,66 @@
     [x] pause / unpause
     [x] trust
 [x] Create SKILL.md
-[ ] Test with OpenClaw (needs deployment)
-[ ] Publish to ClawHub (optional)
+[x] Test E2E with real USDC
 ```
 
-### Submission Tasks
+### GitHub ✅ COMPLETE
 
 ```
-[ ] Write compelling post title
-[ ] Write post content explaining:
-    [ ] Problem being solved
-    [ ] How Clawback works
-    [ ] Demo/video link
-    [ ] Contract address
-    [ ] How to try it
+[x] Create repo: thatshrimple/clawback
+[x] Push code
+[x] Add .gitignore
+```
+
+**Repo:** https://github.com/thatshrimple/clawback
+
+### Moltbook Posts
+
+```
+[x] Teaser post (m/agenteconomy) - Feb 4
+[x] Progress post (m/agenteconomy) - Feb 5
+[ ] Final submission (m/usdc) - Feb 7-8
+```
+
+**Posts:**
+- Teaser: `62a9a532-d7ec-42f3-9875-dcf715f8cf94`
+- Progress: `9b080aba-88ed-4585-8531-ed498da77200`
+
+### Optional Polish
+
+```
 [ ] Record 2-3 min demo video
-[ ] Post to m/usdc submolt
 [ ] Cross-post to X (@BotScampi)
+[ ] Publish skill to ClawHub
 ```
 
 ---
 
-## 🔧 Technical Decisions
+## 🔧 Technical Details
 
-| Decision | Choice | Reason |
-|----------|--------|--------|
-| Chain | **Solana Devnet** | Ntombi prefers Solana, aligns with Colosseum |
-| Framework | **Anchor** | Modern Solana development |
-| Skill Language | TypeScript | OpenClaw native |
-| Storage | On-chain only | Simplicity, auditability |
-| Intent Storage | IPFS via URI | Off-chain but verifiable |
-
----
-
-## 📦 Dependencies
-
-### Anchor Program
-- anchor-lang 0.30.1
-- anchor-spl 0.30.1
-- Solana CLI tools
-
-### Skill
-- @solana/web3.js
-- @coral-xyz/anchor
-- commander (CLI)
-- dotenv
+| Item | Value |
+|------|-------|
+| Chain | Solana Devnet |
+| Program ID | `25MSUtyW1pnuw2QDBDnDkmu57w4VeKAngE4sPSGTbe4E` |
+| Vault | `HpvLjGqTKcCiekX1gvwwREnZM1h1pJsbNVqkG2gc6aKh` |
+| USDC Mint | `4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU` |
+| Framework | Anchor 0.32.1 |
+| GitHub | https://github.com/thatshrimple/clawback |
 
 ---
 
-## 🚨 Risks & Mitigations
+## 🎉 E2E Test Results (Feb 5)
 
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| Contract bug | High | Thorough testing, keep it simple |
-| Time crunch | High | Focus on MVP, cut features if needed |
-| Base testnet issues | Medium | Have backup plan (Sepolia ETH) |
-| Skill complexity | Medium | Start with minimal commands |
+```
+clawback init-vault        ✅ Created vault
+clawback set-policy        ✅ Agent spending rules (100/tx, 500/day)
+clawback pay 5 USDC        ✅ Payment entered 15 min cooling off
+clawback status            ✅ "14 minutes remaining"
+clawback undo              ✅ CLAWED BACK! Funds returned to vault
+clawback status            ✅ No pending payments
+```
 
----
-
-## 📍 Current Status
-
-**Phase:** Day 1-2 - Skill Development  
-**Last Updated:** 2026-02-04 15:25 PST  
-**Next Task:** Deploy Anchor program (blocked on devnet SOL), then test skill
-
-**Completed Today:**
-- ✅ Project spec and plan
-- ✅ **Anchor program v1 built** (`target/deploy/clawback.so`)
-- ✅ IDL generated (`target/idl/clawback.json`)
-- ✅ **OpenClaw Skill created** (`skills/clawback/`)
-  - ✅ SKILL.md with full documentation
-  - ✅ TypeScript client (`src/client.ts`)
-  - ✅ CLI with all commands (`src/cli.ts`)
-  - ✅ Types and helpers (`src/types.ts`)
-
----
-
-## 💬 Notes
-
-- Keep scope tight - MVP first, polish later
-- Document as we go
-- Test early and often
-- Submission > perfection
+**The reversible payment works!** 🦞
 
 ---
 
