@@ -449,6 +449,7 @@ pub struct InitiatePayment<'info> {
         mut,
         seeds = [b"policy", vault.key().as_ref(), agent.key().as_ref()],
         bump = policy.bump,
+        constraint = policy.vault == vault.key() @ ClawbackError::InvalidPolicy,
     )]
     pub policy: Account<'info, Policy>,
     
@@ -467,7 +468,10 @@ pub struct InitiatePayment<'info> {
     )]
     pub payment: Account<'info, Payment>,
     
-    #[account(mut)]
+    #[account(
+        mut,
+        constraint = vault_token_account.key() == vault.vault_token_account @ ClawbackError::InvalidTokenAccount,
+    )]
     pub vault_token_account: InterfaceAccount<'info, TokenAccount>,
     
     #[account(
@@ -478,9 +482,15 @@ pub struct InitiatePayment<'info> {
     )]
     pub payment_token_account: InterfaceAccount<'info, TokenAccount>,
     
-    #[account(mut)]
+    #[account(
+        mut,
+        constraint = recipient_token_account.owner == recipient.key() @ ClawbackError::InvalidRecipientAccount,
+    )]
     pub recipient_token_account: InterfaceAccount<'info, TokenAccount>,
     
+    #[account(
+        constraint = usdc_mint.key() == vault.usdc_mint @ ClawbackError::InvalidMint,
+    )]
     pub usdc_mint: InterfaceAccount<'info, Mint>,
     
     pub system_program: Program<'info, System>,
@@ -503,16 +513,25 @@ pub struct Clawback<'info> {
         mut,
         seeds = [b"payment", vault.key().as_ref(), &payment.id.to_le_bytes()],
         bump = payment.bump,
-        constraint = payment.vault == vault.key(),
+        constraint = payment.vault == vault.key() @ ClawbackError::InvalidPayment,
     )]
     pub payment: Account<'info, Payment>,
     
-    #[account(mut)]
+    #[account(
+        mut,
+        constraint = payment_token_account.owner == payment.key() @ ClawbackError::InvalidTokenAccount,
+    )]
     pub payment_token_account: InterfaceAccount<'info, TokenAccount>,
     
-    #[account(mut)]
+    #[account(
+        mut,
+        constraint = vault_token_account.key() == vault.vault_token_account @ ClawbackError::InvalidTokenAccount,
+    )]
     pub vault_token_account: InterfaceAccount<'info, TokenAccount>,
     
+    #[account(
+        constraint = usdc_mint.key() == vault.usdc_mint @ ClawbackError::InvalidMint,
+    )]
     pub usdc_mint: InterfaceAccount<'info, Mint>,
     
     pub token_program: Interface<'info, TokenInterface>,
@@ -520,7 +539,7 @@ pub struct Clawback<'info> {
 
 #[derive(Accounts)]
 pub struct Finalize<'info> {
-    /// CHECK: Anyone can finalize
+    /// CHECK: Anyone can finalize after cooling off
     pub caller: UncheckedAccount<'info>,
     
     #[account(
@@ -533,16 +552,25 @@ pub struct Finalize<'info> {
         mut,
         seeds = [b"payment", vault.key().as_ref(), &payment.id.to_le_bytes()],
         bump = payment.bump,
-        constraint = payment.vault == vault.key(),
+        constraint = payment.vault == vault.key() @ ClawbackError::InvalidPayment,
     )]
     pub payment: Account<'info, Payment>,
     
-    #[account(mut)]
+    #[account(
+        mut,
+        constraint = payment_token_account.owner == payment.key() @ ClawbackError::InvalidTokenAccount,
+    )]
     pub payment_token_account: InterfaceAccount<'info, TokenAccount>,
     
-    #[account(mut)]
+    #[account(
+        mut,
+        constraint = recipient_token_account.owner == payment.recipient @ ClawbackError::InvalidRecipientAccount,
+    )]
     pub recipient_token_account: InterfaceAccount<'info, TokenAccount>,
     
+    #[account(
+        constraint = usdc_mint.key() == vault.usdc_mint @ ClawbackError::InvalidMint,
+    )]
     pub usdc_mint: InterfaceAccount<'info, Mint>,
     
     pub token_program: Interface<'info, TokenInterface>,
@@ -562,4 +590,14 @@ pub enum ClawbackError {
     PaymentNotPending,
     #[msg("Cooling off period has not expired")]
     CoolingOffNotExpired,
+    #[msg("Invalid token account")]
+    InvalidTokenAccount,
+    #[msg("Invalid USDC mint")]
+    InvalidMint,
+    #[msg("Invalid recipient token account")]
+    InvalidRecipientAccount,
+    #[msg("Invalid policy for vault")]
+    InvalidPolicy,
+    #[msg("Invalid payment for vault")]
+    InvalidPayment,
 }
